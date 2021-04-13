@@ -1,6 +1,7 @@
 import React from "react";
 import { API_URL, API_KEY3 } from "../../api/api";
 
+
 const MoviesHOC =  (Component) => class MoviesHOC extends React.Component {
     constructor() {
         super();

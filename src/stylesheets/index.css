@@ -2,6 +2,14 @@ body {
   background: #fdfdfd;
 }
 
+.menu-link {
+  color: #212529;
+}
+
+.menu-link:hover {
+  text-decoration: none;
+}
+
 .card-img--height {
   height: 180px;
   object-fit: cover;
@@ -9,4 +17,11 @@ body {
 
 .invalid-feedback {
   display: block;
+}
+
+.movieDetailsBackground {
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover
 }
