@@ -6,6 +6,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import Cookies from 'universal-cookie';
 import {API_URL, API_KEY3} from "./api/api"
 import { fetchAPI } from "./api/fetchApi"
+import Favorites from "./components/Favorites/Favorites";
 
 const cookies = new Cookies();
 export const AppContext = React.createContext();
@@ -16,6 +17,7 @@ export default class App extends React.Component {
         this.state =   {
             user: null,
             session_id: null,
+            favorites: [],
         }}
 
     componentDidMount() {
@@ -27,6 +29,9 @@ export default class App extends React.Component {
                     this.updateSessionId(session_id)
                 })
         }
+        this.setState({
+            favorites: JSON.parse(localStorage.getItem("favorites")) || []
+        })
     }
 
     updateUser = user => {
@@ -49,6 +54,29 @@ export default class App extends React.Component {
         })
     };
 
+    addToFavorites = movie => {
+        let movieIndex = this.state.favorites.findIndex(item => item.id === movie.id);
+        if (movieIndex === -1) {
+            this.setState(prevState => ({
+                favorites: [...prevState.favorites, movie]
+            }), () => {
+                const jsonFavorites = JSON.stringify(this.state.favorites);
+                localStorage.setItem("favorites", jsonFavorites)
+            });
+        }
+    };
+
+    removeFromFavorites= (movieId) =>{
+        const updateFavoritesList = this.state.favorites.filter(
+            item => item.id !== movieId);
+        this.setState({
+            favorites: updateFavoritesList
+        }, () => {
+            const jsonFavorites = JSON.stringify(this.state.favorites);
+            localStorage.setItem("favorites", jsonFavorites)
+        })
+    };
+
     render() {
         const { user, session_id} = this.state;
         return (
@@ -58,11 +86,15 @@ export default class App extends React.Component {
                     session_id,
                     updateUser: this.updateUser,
                     updateSessionId: this.updateSessionId,
-                    onLogOut: this.onLogOut
+                    onLogOut: this.onLogOut,
+                    favorites: this.state.favorites,
+                    addToFavorites: this.addToFavorites,
+                    removeFromFavorites: this.removeFromFavorites
                 }}>
                     <Header user={user}/>
-                    <Route exact path="/" component={MoviesPage}/>
-                    <Route exact path="/movie/:id/:movie_title" component={MovieDetails}/>
+                    <Route exact path="/" component={MoviesPage} />
+                    <Route exact path="/favorites" component={Favorites} />
+                    <Route exact path="/movie/:id/:movie_title" component={MovieDetails} />
                 </AppContext.Provider>
             </BrowserRouter>
         );
