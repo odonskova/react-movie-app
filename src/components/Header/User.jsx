@@ -1,9 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import AppContextHOC from "../HOC/AppContextHOC";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { fetchAPI } from "../../api/fetchApi";
 import { API_URL, API_KEY3 } from "../../api/api";
 
+// in order to get access to the list of users or some data about users
+// beforehand we should get some token or sessionId
+// API movieDB works in such a way that having API KEY we can get token
+// Having request-token we can get sessionID
+// Having sessionID we will be able to send request to get users
+// 1. Get request to get token: `${API_URL}/authentication/token/new?api_key=${API_KEY3}`
+// 2. Post request to validate_with_login: `${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY3}`
+// 3. post request to get sessionID `${API_URL}//authentication/session/new?api_key=${API_KEY3}`
 
 class User extends React.Component {
     state = {
@@ -50,7 +59,10 @@ class User extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem>
-                        Избранные
+                        <Link to="/" className="menu-link">Главная страница</Link>
+                    </DropdownItem>
+                    <DropdownItem>
+                       <Link to="/favorites" className="menu-link">Избранные</Link>
                     </DropdownItem>
                     <DropdownItem
                         onClick={this.handleLogOut}
