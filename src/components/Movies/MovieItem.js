@@ -40,7 +40,7 @@ class MovieItem extends React.Component {
                 </div>
 
                 <div className="card-body d-flex justify-content-between">
-                    <div>
+                    <div className="card-title--long">
                         <Link to={`/movie/${item.id}/${item.original_title.replace(/[^A-Za-z]/g, "")}`} className="card-title">{item.title}</Link>
                         <div className="card-text">Рейтинг: {item.vote_average}</div>
                     </div>

@@ -9,6 +9,7 @@ body {
 .menu-link:hover {
   text-decoration: none;
 }
+
 .image-container {
   position: relative;
   transition: transform 0.2s;
@@ -46,6 +47,17 @@ body {
 .card-img--height {
   height: 180px;
   object-fit: cover;
+}
+
+.card-title--long {
+  width : 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-title--long:hover {
+  white-space: normal;
 }
 
 .invalid-feedback {
